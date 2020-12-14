@@ -95,7 +95,11 @@ def main() -> None:
     cleaned_contents = remove_dupes(all_contents)
     debug_msg(bcolors.OKGREEN, 'STATUS', 'Removed {} duplicates'.format(len(all_contents) - len(cleaned_contents)))
 
-    with open(args.file, 'w') as f:
+    if args.file:
+        filename = args.file
+    else:
+        filename = '_'.join(args.folders) + '.csv'
+    with open(filename, 'w') as f:
         writer = csv.writer(f)
         for row in cleaned_contents:
             # schema for entry
@@ -118,7 +122,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Enables verbose logging.')
-    parser.add_argument('-f', '--file', action='store', help='File to store all the data (overwrites an existing file)', required=True)
+    parser.add_argument('-f', '--file', action='store', help='File to store all the data (Default name is all of the market places')
     parser.add_argument('folders', nargs='*', help='Folders to process')
     args = parser.parse_args()
     main()
