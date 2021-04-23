@@ -101,6 +101,7 @@ def main() -> None:
         filename = '_'.join(args.folders) + '.csv'
     with open(filename, 'w') as f:
         writer = csv.writer(f)
+        row_count = 0
         for row in cleaned_contents:
             # schema for entry
             '''
@@ -113,8 +114,9 @@ def main() -> None:
             marketplace rating (optional)
             '''
             writer.writerow(row)
+            row_count += 1
 
-    debug_msg(bcolors.OKGREEN, 'STATUS', 'Written to file: {}'.format(args.file))
+    debug_msg(bcolors.OKGREEN, 'STATUS', 'Written to file: {} ({} entries)'.format(filename, row_count))
     return
 
 
